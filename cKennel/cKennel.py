@@ -1,5 +1,17 @@
 #! usr/bin/env python
 
+#Program: cKennel.py
+#Author: Dan Sarauer (pronounced Sar-are)
+#Modified: 4/29/2014
+#Description: Trying my hand at a bit of python code and used the example of a kennel.
+#  The program will get input from the user as to what they would like to do:
+#    1. See who the kennel has available
+#    2. Put a pet up for adoption
+#    3. Adopt a pet
+#    4. Exit the program
+#  I've done my set to sanitize all input so that we don't have weird values going all over the place or into the file where I'm storing the
+#  "inventory" that is our list of pets at the kennel.
+
 def listPets():
 	#if the kennel has pets to give it will list them
 	try:
