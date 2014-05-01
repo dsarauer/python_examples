@@ -13,75 +13,76 @@
 #  "inventory" that is our list of pets at the kennel.
 
 def listPets():
-	#if the kennel has pets to give it will list them
-	try:
-		cKennel = open('CodingKennels.txt', 'r') #open the file
-		guestsOfTheKennel = cKennel.read() #read file contents into a variable named guestsOfTheKennel
-		cKennel.close() #close the file
-		
-		availableFriends = guestsOfTheKennel.split(',') #split the guests into their own kennels
-		
-		print '\n///////////////////////////'
-		print '// OUR AVAILABLE FRIENDS //'
-		print '///////////////////////////\n'
-		
-		for friend in availableFriends:
-			name, type, sex, age, breed, note = friend.split(':') #split the pets stats into easily referenced areas
-			if sex == 'm':
-				print 'We have a {0} named {1}.  He is a {2} year old {3}.\nNote: {4}\n'.format(type, name, age, breed, note)
-			else:
-				print 'We have a {0} named {1}.  She is a {2} year old {3}.\nNote: {4}\n'.format(type, name, age, breed, note)
-		
-	except: #if there is nothing to list it will exit and re-prompt the menu
-		print '\n\nOops, looks like we don\'t have any pets right now!'
-		print 'Try again later...maybe a friend will come along for you!\n\n'
+        #if the kennel has pets to give it will list them
+        try:
+                cKennel = open('CodingKennels.txt', 'r') #open the file
+                guestsOfTheKennel = cKennel.read() #read file contents into a variable named guestsOfTheKennel
+                cKennel.close() #close the file
+
+                availableFriends = guestsOfTheKennel.split(',') #split the guests into their own kennels
+                
+        except IOError:
+                print 'I/O error({0}): {1}'.format(e.errno, e.strerror)
+
+        if len(availableFriends) >= 1:
+                print '\n///////////////////////////'
+                print '// OUR AVAILABLE FRIENDS //'
+                print '///////////////////////////\n'
+
+                for friend in availableFriends:
+                        name, race, sex, age, breed, note = friend.split(':') #split the pets stats into easily referenced areas
+                        if sex == 'm':
+                                print 'We have a {0} named {1}.  He is a {2} year old {3}.\nNote: {4}\n'.format(race, name, age, breed, note)
+                        else:
+                                print 'We have a {0} named {1}.  She is a {2} year old {3}.\nNote: {4}\n'.format(race, name, age, breed, note)
+        else: #if there is nothing to list it will exit and re-prompt the menu
+                print '\n\nOops, looks like we don\'t have any pets right now!'
+                print 'Try again later...maybe a friend will come along for you!\n\n'
 	
 def givePetUp():
 	entryComplete = False
+	validInput = False
 	
 	print 'Sorry to hear that, but we are glad to add another member to our family here!\n'
 		
 	print 'We\'ll need some information on the pet in question...'
 	name = raw_input('Name (Alpha characters only please):')
-	type = raw_input('Type of animal (example: cat):')
+	race = raw_input('Race of animal (example: cat):')
 	sex = raw_input('Sex (m/f):')
 	age = raw_input('Age:')
 	breed = raw_input('Breed (example: Golden Retriever):')
 	note = raw_input('Notes about them (example: Playful):')
 	
-	while entryComplete == False:	
-		validInput = False #assume faulty input
-	
+	while not entryComplete:		
 		#after prompting for all of this we should sanitize it before writing it to inventory
 		
 		#clean up string fields
 		name = name.translate(None,'~`!@#$%^&*()_+=-|}{\][":\';?></.,1234567890') #remove symbols and numbers from name
-		type = type.translate(None,'~`!@#$%^&*()_+=-|}{\][":\';?></.,1234567890') #remove symbols and numbers from type
+		race = race.translate(None,'~`!@#$%^&*()_+=-|}{\][":\';?></.,1234567890') #remove symbols and numbers from race
 		breed = breed.translate(None,'~`!@#$%^&*()_+=-|}{\][":\';?></.,1234567890') #remove symbols and numbers from breed
 		note = note.translate(None,'~`!@#$%^&*()_+=-|}{\][":\';?></.,1234567890') #remove symbols and numbers from note
 		
-		while validInput == False: #go through and re-prompt if necessary
+		while not validInput: #go through and re-prompt if necessary
 			#validate number fields
 			if sex == 'm' or sex == 'f': #sex must be either m or f
 				try:
 					int(age) #Age must be an integer
+					validInput = True #if sex is m|f and age is an int, assume correct information
 				except ValueError:
 					print '\nAge must be a number...'
-					age = raw_input('Age:')
-				
-				validInput = True
+					age = raw_input('Age:') #re-prompt for the correct age
 			else:
 				print '\nPlease enter either m or f for sex...'
 				sex = raw_input('Sex (m/f):')
 
-		print '\nYou enterred:'
-		print 'Name: {0}\nType: {1}\nSex: {2}\nAge: {3}\nBreed: {4}\nNote: {5}\n'.format(name,type,sex,age,breed,note)
-		confirmEntry = raw_input('Is the enterred information correct?(y/n):')
+		print '\nYou entered:'
+		print 'Name: {0}\nrace: {1}\nSex: {2}\nAge: {3}\nBreed: {4}\nNote: {5}\n'.format(name,race,sex,age,breed,note)
+		confirmEntry = raw_input('Is the entered information correct?(y/n):')
 
 		if confirmEntry == 'y': #prep animal for admittance
 			
-			# join the elements together like name:type:sex:age:breed:note
-			newFriend = ':'.join([name,type,sex,age,breed,note])
+			# join the elements together like name:race:sex:age:breed:note
+			newFriend = ':'.join([name,race,sex,age,breed,note])
 						
 			cKennel = open('CodingKennels.txt', 'a') #open the file for appending
 			cKennel.write(',' + newFriend) #write new friend to file
@@ -91,13 +92,13 @@ def givePetUp():
 			
 		elif confirmEntry == 'n':
 			#which one is bad
-			badData = raw_input('Sorry about that...\n\nWhich one would you like to change?(name,type,sex,age,breed,note):')
+			badData = raw_input('Sorry about that...\n\nWhich one would you like to change?(name,race,sex,age,breed,note):')
 			
 			#make sure they selected something available
 			if badData == 'name':
 				name = raw_input('Name (Alpha characters only please):') #re-enter name
-			elif badData == 'type':
-				type = raw_input('Type of animal (example: cat):') #re-enter type
+			elif badData == 'race':
+				race = raw_input('race of animal (example: cat):') #re-enter race
 			elif badData == 'sex':
 				sex = raw_input('Sex (m/f):') #re-enter sex
 			elif badData == 'age':
@@ -107,9 +108,9 @@ def givePetUp():
 			elif badData == 'note':
 				note = raw_input('Notes about them (example: Playful):') #re-enter note
 			else:
-				print 'Invalid entry! Try again...' #why can't you type?
+				print 'Invalid entry! Try again...' #why can't you race?
 		else:
-			print '\nInvalid entry! Try again....\n' #really?!?! you can't type y or n? come on!
+			print '\nInvalid entry! Try again....\n' #really?!?! you can't race y or n? come on!
 
 def adoptPet():
 	#if the kennel has pets to give it will list them
@@ -129,7 +130,7 @@ def adoptPet():
 			headCount = 1 #simple counter for a list of our animals
 			
 			for friend in availableFriends: #list animals available
-				name, type, sex, age, breed, note = friend.split(':') #split the pets stats into easily referenced areas
+				name, race, sex, age, breed, note = friend.split(':') #split the pets stats into easily referenced areas
 				print '{0}:{1} is a {2} year old {3}.'.format(headCount, name, age, breed) #personalized listing for our furry-friends
 				headCount += 1 #advance count for list reasons
 			
@@ -143,7 +144,7 @@ def adoptPet():
 				if 1 <= choice <= len(availableFriends):				
 					choice -= 1 #convert choice to the index they chose
 					
-					name, type, sex, age, breed, note  = availableFriends[choice].split(':') #get their choice animals stats
+					name, race, sex, age, breed, note  = availableFriends[choice].split(':') #get their choice animals stats
 					print '\nYou chose {0}!'.format(name) #confirm their selection
 					
 					confirm = raw_input('Is this correct? (y/n)') 
@@ -216,6 +217,6 @@ while ans:
 			raw_input('Press enter to continue')
 			ans = False
 		else:
-			print '\nInvalid entry detected. Please choose an option 1-4...\n'
+			print '\nValue must be between 1 and 4...\n'
 	except ValueError:
 		print '\nInvalid entry detected. Please choose an option 1-4...\n'
