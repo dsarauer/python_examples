@@ -1,0 +1,15 @@
+HTML5 & CSS3 for the Real World|376pg|Alexis Goldstein
+jQuery: Novice to Ninja: New Kicks and Tricks|390pg|Earle Castledine
+Build Mobile Websites and Apps for Smart Devices|376pg|Earle Castledine
+Create Stunning HTML Email That Just Works!|160pg|Matthew Patterson
+Simply JavaScript|432pg|Kevin Yank
+Deliver First-Class Websites: 101 Essential Checklists|328pg|Shirley Kaiser
+Build Your Own ASP.NET 4 Website Using C# & VB, 4th Edition|700pg|Cristian Darie
+Outsourcing Web Projects|76pg|Dave Hecker
+Jump Start Sinatra|150pg|Darren Jones
+The CSS3 Anthology, 4th Edition|433pg|Rachel Andrew
+The Principles of Beautiful Web Design, 2nd Edition|227pg|Jason Beaird
+Jump Start HTML5: Basics|58pg|Tiffany Brown
+Jump Start CoffeeScript|151pg|Earle Castledine
+Build Your Own Website The Right Way Using HTML & CSS, 3rd Edition|560pg|Ian Lloyd
+PHP Master: Write Cutting-edge Code|400pg|Lorna Mitchell
